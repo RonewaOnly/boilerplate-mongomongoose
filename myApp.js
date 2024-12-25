@@ -75,17 +75,20 @@ const findPersonById = (personId, done) => {
 
 const findEditThenSave = (personId, done) => {
   const foodToAdd = "hamburger";
-   // Find the person by their ID
-   Person.findById(personId, function(err, person) {
-    if (err) return console.error(err);
+  Person.findById(personId, (err, person) => {
+    if (err) return done(err);
+    if (!person) return done({ message: 'Person not found' });
     
-    // Add 'hamburger' to the favoriteFoods array
-    person.favoriteFoods.push(foodToAdd);
+    // Add hamburger to favoriteFoods array
+    person.favoriteFoods.push("hamburger");
+    
+    // Mark favoriteFoods as modified if using Mixed type
+    // person.markModified('favoriteFoods');
     
     // Save the updated person
-    person.save(function(err, updatedPerson) {
-      if (err) return console.error(err);
-      console.log('Updated person:', updatedPerson);
+    person.save((err, updatedPerson) => {
+      if (err) return done(err);
+      done(null, updatedPerson);
     });
   });
 };

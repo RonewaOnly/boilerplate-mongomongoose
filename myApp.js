@@ -96,6 +96,16 @@ const findEditThenSave = (personId, done) => {
 const findAndUpdate = (personName, done) => {
   const ageToSet = 20;
 
+  Person.findOneAndUpdate(
+    { name: personName },    // search condition
+    { age: ageToSet },            // update
+    { new: true },          // options to return updated document
+    (err, updatedDoc) => {  // callback
+      if (err) return done(err);
+      done(null, updatedDoc);
+    }
+  );
+
   done(null /*, data*/);
 };
 

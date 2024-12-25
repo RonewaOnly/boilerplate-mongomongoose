@@ -23,10 +23,10 @@ const createAndSavePerson = (done) => {
   person.save((err, data) => {
     if (err) {
       console.log(err);
+      done(err,none);
     }
     done(null, data);
   });
-  done(null /*, data*/);
 };
 
 const createManyPeople = (arrayOfPeople, done) => {
